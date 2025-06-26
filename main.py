@@ -11,11 +11,14 @@ import json
 import os
 
 firebase_json = os.environ.get("FIREBASE_CREDENTIALS")
-cred_dict = json.loads(firebase_json)
-cred = credentials.Certificate(cred_dict)
-firebase_admin.initialize_app(cred, {
-    "databaseURL": "https://simcompanies-tracker-default-rtdb.firebaseio.com/"
-})
+if firebase_json:
+    cred_dict = json.loads(firebase_json)
+    cred = credentials.Certificate(cred_dict)
+    firebase_admin.initialize_app(cred, {
+        "databaseURL": "https://simcompanies-tracker-default-rtdb.firebaseio.com/"
+    })
+else:
+    raise RuntimeError("FIREBASE_CREDENTIALS environment variable not set")
 
 # 🌍 Timezone Setup
 IST = pytz.timezone("Asia/Kolkata")
