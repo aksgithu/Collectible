@@ -7,7 +7,12 @@ import pytz
 from concurrent.futures import ThreadPoolExecutor
 
 # 🚀 Firebase 
-cred = credentials.Certificate("fb_rtdb.json")
+import json
+import os
+
+firebase_json = os.environ.get("FIREBASE_CREDENTIALS")
+cred_dict = json.loads(firebase_json)
+cred = credentials.Certificate(cred_dict)
 firebase_admin.initialize_app(cred, {
     "databaseURL": "https://simcompanies-tracker-default-rtdb.firebaseio.com/"
 })
